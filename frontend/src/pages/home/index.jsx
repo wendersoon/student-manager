@@ -126,29 +126,6 @@ const Home = () => {
             )
           })}
         </div>
-
-        {/* Quick Stats */}
-        <div className="mt-8">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Visão Geral</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white p-4 rounded-lg shadow">
-              <p className="text-sm text-gray-500">Total de Usuários</p>
-              <p className="text-2xl font-bold text-gray-900">145</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <p className="text-sm text-gray-500">Turmas Ativas</p>
-              <p className="text-2xl font-bold text-gray-900">12</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <p className="text-sm text-gray-500">Total de Estudantes</p>
-              <p className="text-2xl font-bold text-gray-900">280</p>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <p className="text-sm text-gray-500">Média de Alunos por Turma</p>
-              <p className="text-2xl font-bold text-gray-900">23</p>
-            </div>
-          </div>
-        </div>
       </main>
     </div>
   );
