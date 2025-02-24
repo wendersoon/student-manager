@@ -7,7 +7,8 @@ export const UserService = {
             return response.data.map(
                 user => ({
                     id: user.id,
-                    name: `${user.name} ${user.lastName}`,
+                    name: user.name,
+                    lastName: user.lastName,
                     email: user.email,
                     role: user.role,
                     is_active: user.is_active,

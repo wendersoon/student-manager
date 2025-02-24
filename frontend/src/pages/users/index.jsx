@@ -41,7 +41,7 @@ const UserTable = ({ users, onEdit, onDelete }) => (
                     </div>
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                    <div className="text-sm font-medium text-gray-900">{user.name} {user.lastName}</div>
                   </div>
                 </div>
               </td>
@@ -132,8 +132,8 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const userData = {
-      name: formData.get('name').split(' ')[0],
-      lastName: formData.get('name').split(' ').slice(1).join(' '),
+      name: formData.get('name'),
+      lastName: formData.get('lastName'),
       email: formData.get('email'),
       password: formData.get('password'),
       role: formData.get('role'),
@@ -145,10 +145,17 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} className="p-6 space-y-4">
       <FormField
-        label="Nome Completo"
+        label="Nome"
         name="name"
         type="text"
         defaultValue={user?.name}
+      />
+
+      <FormField
+        label="Sobrenome"
+        name="lastName"
+        type="text"
+        defaultValue={user?.lastName}
       />
 
       <FormField
@@ -180,7 +187,7 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
         label="Status"
         name="status"
         type="select"
-        defaultValue={user?.status || 'Ativo'}
+        defaultValue={user?.is_active ? 'Ativo' : 'Inativo'}
         options={[
           { value: 'Ativo', label: 'Ativo' },
           { value: 'Inativo', label: 'Inativo' }
