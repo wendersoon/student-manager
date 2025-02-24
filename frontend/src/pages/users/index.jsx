@@ -4,6 +4,7 @@ import { Plus, User, Edit2, Trash2, Search, X } from 'lucide-react';
 
 import { UserService } from '../../services/users/users';
 import { NotificationService } from '../../services/notification/notification';
+import { HandleApiError } from '../../utils/HandleError';
 
 import Nav from '../../components/NavPage';
 
@@ -276,7 +277,7 @@ const UserManagement = () => {
       setError(null);
     } catch (err) {
       setError('Erro ao carregar usuários');
-      NotificationService.error('Não foi possível carregar a lista de usuários');
+      HandleApiError(err);
       console.error('Error fetching users:', err);
     } finally {
       setLoading(false);
@@ -303,7 +304,7 @@ const UserManagement = () => {
         NotificationService.success('Usuário excluído com sucesso!');
       } catch (error) {
         console.error('Error deleting user:', error);
-        NotificationService.error('Erro ao excluir usuário');
+        HandleApiError(error);
       }
     }
   };
@@ -312,16 +313,18 @@ const UserManagement = () => {
     try {
       if (modalMode === 'create') {
         await UserService.createUser(userData);
+        NotificationService.success('Usuário criado com sucesso!');
       } else {
         await UserService.updateUser(currentUser.id, userData);
+        NotificationService.success('Usuário atualizado com sucesso!');
       }
       await fetchUsers();
       setShowModal(false);
     } catch (error) {
       console.error('Error saving user:', error);
-      NotificationService.error('Erro ao salvar usuário');
+      HandleApiError(error);
     }
-  };
+  }
 
   if (loading) return <LoadingState />;
   if (error) return <ErrorState error={error} />;

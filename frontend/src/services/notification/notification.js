@@ -11,6 +11,24 @@ export const NotificationService = {
         });
     },
     error(message) {
+        // Verifica se a mensagem tem múltiplas linhas
+        if (message.includes('\n')) {
+            // Formata as linhas de erro em uma lista HTML
+            const formattedMessage = message
+                .split('\n')
+                .map(line => `<li class="text-left">${line}</li>`)
+                .join('');
+                
+            return Swal.fire({
+                title: 'Erro!',
+                html: `<ul class="mt-2">${formattedMessage}</ul>`,
+                icon: 'error',
+                confirmButtonColor: '#3B82F6',
+                confirmButtonText: 'OK'
+            });
+        }
+        
+        // Caso seja uma mensagem simples
         return Swal.fire({
             title: 'Erro!',
             text: message,
