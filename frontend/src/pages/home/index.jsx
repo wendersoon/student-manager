@@ -6,8 +6,6 @@ import {
   GraduationCap, 
   School, 
   LayoutDashboard, 
-  Bell, 
-  User, 
   LogOut 
 } from 'lucide-react';
 
@@ -84,12 +82,6 @@ const Home = () => {
 
             {/* Right side icons */}
             <div className="flex items-center space-x-4">
-              <button className="text-gray-500 hover:text-gray-700">
-                <Bell className="h-6 w-6" />
-              </button>
-              <button className="text-gray-500 hover:text-gray-700">
-                <User className="h-6 w-6" />
-              </button>
               <button className="text-gray-500 hover:text-gray-700"
               onClick={() => AuthService.logout()}>
                 <LogOut className="h-6 w-6" />
