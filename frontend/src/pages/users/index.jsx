@@ -135,10 +135,16 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
       name: formData.get('name'),
       lastName: formData.get('lastName'),
       email: formData.get('email'),
-      password: formData.get('password'),
       role: formData.get('role'),
       is_active: formData.get('status') === 'Ativo'
     };
+    
+    // Apenas inclui a senha se estiver criando um novo usuário ou se o campo não estiver vazio
+    const password = formData.get('password');
+    if (mode === 'create' || (password && password.trim() !== '')) {
+      userData.password = password;
+    }
+    
     onSubmit(userData);
   };
 
@@ -164,11 +170,13 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
         type="email"
         defaultValue={user?.email}
       />
+      
       <FormField
         label="Senha"
         name="password"
         type="password"
-        defaultValue={user?.password}
+        defaultValue=""
+        required={mode === 'create'} // Senha obrigatória apenas na criação
       />
       
       <FormField
@@ -199,20 +207,20 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
   );
 };
 
-const FormField = ({ label, name, type, defaultValue, options }) => {
+const FormField = ({ label, name, type, defaultValue, options, required = true }) => {
   const baseInputClasses = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
   
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
+        {label} {required ? '' : '(opcional)'}
       </label>
       {type === 'select' ? (
         <select 
           name={name}
           defaultValue={defaultValue}
           className={baseInputClasses}
-          required
+          required={required}
         >
           {options.map(option => (
             <option key={option.value} value={option.value}>
@@ -226,7 +234,7 @@ const FormField = ({ label, name, type, defaultValue, options }) => {
           type={type}
           defaultValue={defaultValue}
           className={baseInputClasses}
-          required
+          required={required}
         />
       )}
     </div>

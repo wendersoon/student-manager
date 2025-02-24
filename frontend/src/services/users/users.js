@@ -39,7 +39,15 @@ export const UserService = {
 
     async updateUser(id, userData) {
         try {
-            const response = await api.put(`users/${id}/`, userData);
+            // Se não houver senha, podemos removê-la do objeto para não enviar um valor vazio
+            if (!userData.password) {
+                const { password, ...dataWithoutPassword } = userData;
+                const response = await api.patch(`users/${id}/`, dataWithoutPassword);
+                return response.data;
+            }
+            
+            // Caso contrário, envia todos os dados incluindo a senha
+            const response = await api.patch(`users/${id}/`, userData);
             return response.data;
         } catch (error) {
             throw error;
