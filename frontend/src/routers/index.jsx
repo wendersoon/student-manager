@@ -4,6 +4,7 @@ import Login from '../pages/login';
 import Home from '../pages/home';
 import Dashboard from '../pages/dashboard';
 import UserManagement from '../pages/users';
+import Classes from '../pages/classes';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,16 @@ const router = createBrowserRouter([
       {
         path: '/usuarios',
         element: <UserManagement />,
+      },
+    ],
+  },
+  // Rotas exclusivas para admin e coordenador
+  {
+    element: <RoleRoute allowedRoles={['admin', 'coordenador']} />,
+    children: [
+      {
+        path: '/turmas',
+        element: <Classes />,
       },
     ],
   },
