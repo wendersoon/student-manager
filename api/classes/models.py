@@ -10,6 +10,8 @@ class Class(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
 
+    is_active = models.BooleanField(default=True)
+    
     # Auditoria
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

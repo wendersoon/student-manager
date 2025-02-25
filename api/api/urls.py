@@ -9,14 +9,16 @@ from drf_spectacular.views import (
     SpectacularAPIView,
 )
 
-from users import views
+from users.views import UserViewSet, CustomTokenObtainPairView
+from classes.views import ClassViewSet
 
 router = DefaultRouter()
-router.register(r'api/users', views.UserViewSet, basename='users')
+router.register(r'api/users', UserViewSet, basename='users')
+router.register(r'api/classes', ClassViewSet, basename='classes')
 
 urlpatterns = [
 
-    path('api/token/', views.CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('', include(router.urls)),
