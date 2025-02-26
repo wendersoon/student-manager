@@ -6,7 +6,7 @@ User = get_user_model()
 class Class(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    
+    year = models.IntegerField(default=2025)
     start_date = models.DateField()
     end_date = models.DateField()
 
