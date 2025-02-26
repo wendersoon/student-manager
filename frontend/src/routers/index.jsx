@@ -20,8 +20,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/usuarios',
-        element: <UserManagement />,
+        path: '/dashboard',
+        element: <Dashboard />,
       },
     ],
   },
@@ -33,32 +33,12 @@ const router = createBrowserRouter([
         path: '/turmas',
         element: <Classes />,
       },
-    ],
-  },
-  // Rotas exclusivas para admin
-  {
-    element: <RoleRoute allowedRoles={['admin']} />,
-    children: [
-      {
-        path: '/dashboard',
-        element: <Dashboard />,
-      },
-    ],
-  },
-  // Rotas para admin e coordenador
-  /*{
-    element: <RoleRoute allowedRoles={['admin', 'coordenador']} />,
-    children: [
-      {
-        path: '/turmas',
-        element: <Classes />,
-      },
       {
         path: '/usuarios',
-        element: <Students />,
+        element: <UserManagement />,
       },
     ],
-  },*/
+  },
 ]);
 
 function Router() {

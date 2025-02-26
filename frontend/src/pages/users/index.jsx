@@ -1,6 +1,6 @@
 // UserTable.jsx
 import { useState, useEffect } from "react";
-import { Plus, User, Edit2, Trash2, Search, X } from "lucide-react";
+import { User, Edit2, Trash2, Search, X } from "lucide-react";
 
 import { UserService } from "../../services/users/users";
 import { NotificationService } from "../../services/notification/notification";
@@ -9,6 +9,8 @@ import { HandleApiError } from "../../utils/HandleError";
 import Nav from "../../components/NavPage";
 import SearchBar from "../../components/SearchBar";
 import ButtonAdd from "../../components/ButtonAdd";
+import LoadingState from "../../components/LoadingState";
+import ErrorState from "../../components/ErrorState";
 
 const UserTable = ({ users, onEdit, onDelete }) => (
   <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -379,19 +381,5 @@ const UserManagement = () => {
     </div>
   );
 };
-
-// LoadingState.jsx
-const LoadingState = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="text-xl text-gray-600">Carregando...</div>
-  </div>
-);
-
-// ErrorState.jsx
-const ErrorState = ({ error }) => (
-  <div className="min-h-screen flex items-center justify-center">
-    <div className="text-xl text-red-600">{error}</div>
-  </div>
-);
 
 export default UserManagement;

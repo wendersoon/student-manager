@@ -17,31 +17,31 @@ const Home = () => {
     const baseCards = {
       dashboard: {
         title: 'Dashboard',
-        description: 'Visualize estatísticas e informações gerais',
+        description: 'Estatísticas e informações gerais',
         icon: LayoutDashboard,
         color: 'blue',
         path: '/dashboard'
       },
       users: {
-        title: 'Gerenciar Usuários',
-        description: 'Cadastre e gerencie usuários do sistema',
+        title: 'Usuários',
+        description: 'Gerencie usuários do sistema',
         icon: Users,
         color: 'green',
         path: '/usuarios'
       },
-      students: {
-        title: 'Gerenciar Estudantes',
-        description: 'Administre o cadastro de estudantes',
-        icon: GraduationCap,
-        color: 'orange',
-        path: '/estudantes'
-      },
       classes: {
-        title: 'Gerenciar Turmas',
+        title: 'Turmas',
         description: 'Organize e administre as turmas',
         icon: School,
         color: 'purple',
         path: '/turmas'
+      },
+      students: {
+        title: 'Alunos',
+        description: 'Administre o cadastro de estudantes',
+        icon: GraduationCap,
+        color: 'orange',
+        path: '/estudantes'
       },
     };
 
@@ -50,17 +50,18 @@ const Home = () => {
         return [
           baseCards.dashboard,
           baseCards.users,
-          baseCards.students,
-          baseCards.classes
+          baseCards.classes,
+          baseCards.students
         ];
       case 'coordenador':
         return [
           baseCards.users,
+          baseCards.classes,
           baseCards.students,
-          baseCards.classes
         ];
       case 'colaborador':
         return [
+          baseCards.dashboard,
           baseCards.students
         ];
       default:
