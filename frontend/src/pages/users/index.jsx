@@ -1,13 +1,14 @@
 // UserTable.jsx
-import { useState, useEffect } from 'react';
-import { Plus, User, Edit2, Trash2, Search, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Plus, User, Edit2, Trash2, Search, X } from "lucide-react";
 
-import { UserService } from '../../services/users/users';
-import { NotificationService } from '../../services/notification/notification';
-import { HandleApiError } from '../../utils/HandleError';
+import { UserService } from "../../services/users/users";
+import { NotificationService } from "../../services/notification/notification";
+import { HandleApiError } from "../../utils/HandleError";
 
-import Nav from '../../components/NavPage';
-import SearchBar from '../../components/SearchBar';
+import Nav from "../../components/NavPage";
+import SearchBar from "../../components/SearchBar";
+import ButtonAdd from "../../components/ButtonAdd";
 
 const UserTable = ({ users, onEdit, onDelete }) => (
   <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -43,7 +44,9 @@ const UserTable = ({ users, onEdit, onDelete }) => (
                     </div>
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">{user.name} {user.lastName}</div>
+                    <div className="text-sm font-medium text-gray-900">
+                      {user.name} {user.lastName}
+                    </div>
                   </div>
                 </div>
               </td>
@@ -54,10 +57,14 @@ const UserTable = ({ users, onEdit, onDelete }) => (
                 <div className="text-sm text-gray-900">{user.role}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <StatusBadge isActive={user.is_active}   />
+                <StatusBadge isActive={user.is_active} />
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <ActionButtons user={user} onEdit={onEdit} onDelete={onDelete} />
+                <ActionButtons
+                  user={user}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
               </td>
             </tr>
           ))}
@@ -68,12 +75,12 @@ const UserTable = ({ users, onEdit, onDelete }) => (
 );
 
 const StatusBadge = ({ isActive }) => (
-  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-    isActive 
-      ? 'bg-green-100 text-green-800' 
-      : 'bg-red-100 text-red-800'
-  }`}>
-    {isActive ? 'Ativo' : 'Inativo'}
+  <span
+    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+      isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+    }`}
+  >
+    {isActive ? "Ativo" : "Inativo"}
   </span>
 );
 
@@ -99,17 +106,19 @@ const UserModal = ({ mode, user, onClose, onSubmit }) => (
     <div className="bg-white rounded-lg w-full max-w-md">
       <div className="flex justify-between items-center p-6 border-b">
         <h2 className="text-xl font-semibold text-gray-900">
-          {mode === 'create' ? 'Novo Usuário' : 'Editar Usuário'}
+          {mode === "create" ? "Novo Usuário" : "Editar Usuário"}
         </h2>
-        <button
-          onClick={onClose}
-          className="text-gray-400 hover:text-gray-500"
-        >
+        <button onClick={onClose} className="text-gray-400 hover:text-gray-500">
           <X className="h-6 w-6" />
         </button>
       </div>
-      
-      <UserForm user={user} mode={mode} onSubmit={onSubmit} onCancel={onClose} />
+
+      <UserForm
+        user={user}
+        mode={mode}
+        onSubmit={onSubmit}
+        onCancel={onClose}
+      />
     </div>
   </div>
 );
@@ -119,19 +128,19 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const userData = {
-      name: formData.get('name'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      role: formData.get('role'),
-      is_active: formData.get('status') === 'Ativo'
+      name: formData.get("name"),
+      lastName: formData.get("lastName"),
+      email: formData.get("email"),
+      role: formData.get("role"),
+      is_active: formData.get("status") === "Ativo",
     };
-    
+
     // Apenas inclui a senha se estiver criando um novo usuário ou se o campo não estiver vazio
-    const password = formData.get('password');
-    if (mode === 'create' || (password && password.trim() !== '')) {
+    const password = formData.get("password");
+    if (mode === "create" || (password && password.trim() !== "")) {
       userData.password = password;
     }
-    
+
     onSubmit(userData);
   };
 
@@ -157,35 +166,35 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
         type="email"
         defaultValue={user?.email}
       />
-      
+
       <FormField
         label="Senha"
         name="password"
         type="password"
         defaultValue=""
-        required={mode === 'create'} // Senha obrigatória apenas na criação
+        required={mode === "create"} // Senha obrigatória apenas na criação
       />
-      
+
       <FormField
         label="Função"
         name="role"
         type="select"
-        defaultValue={user?.role || 'colaborador'}
+        defaultValue={user?.role || "colaborador"}
         options={[
-          { value: 'admin', label: 'Administrador' },
-          { value: 'coordenador', label: 'Coordenador' },
-          { value: 'colaborador', label: 'Colaborador' }
+          { value: "admin", label: "Administrador" },
+          { value: "coordenador", label: "Coordenador" },
+          { value: "colaborador", label: "Colaborador" },
         ]}
       />
-      
+
       <FormField
         label="Status"
         name="status"
         type="select"
-        defaultValue={user?.is_active ? 'Ativo' : 'Inativo'}
+        defaultValue={user?.is_active ? "Ativo" : "Inativo"}
         options={[
-          { value: 'Ativo', label: 'Ativo' },
-          { value: 'Inativo', label: 'Inativo' }
+          { value: "Ativo", label: "Ativo" },
+          { value: "Inativo", label: "Inativo" },
         ]}
       />
 
@@ -194,22 +203,30 @@ const UserForm = ({ user, mode, onSubmit, onCancel }) => {
   );
 };
 
-const FormField = ({ label, name, type, defaultValue, options, required = true }) => {
-  const baseInputClasses = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
-  
+const FormField = ({
+  label,
+  name,
+  type,
+  defaultValue,
+  options,
+  required = true,
+}) => {
+  const baseInputClasses =
+    "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1">
-        {label} {required ? '' : '(opcional)'}
+        {label} {required ? "" : "(opcional)"}
       </label>
-      {type === 'select' ? (
-        <select 
+      {type === "select" ? (
+        <select
           name={name}
           defaultValue={defaultValue}
           className={baseInputClasses}
           required={required}
         >
-          {options.map(option => (
+          {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
@@ -241,15 +258,15 @@ const FormButtons = ({ mode, onCancel }) => (
       type="submit"
       className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
     >
-      {mode === 'create' ? 'Criar' : 'Salvar'}
+      {mode === "create" ? "Criar" : "Salvar"}
     </button>
   </div>
 );
 
 const UserManagement = () => {
   const [showModal, setShowModal] = useState(false);
-  const [modalMode, setModalMode] = useState('create');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [modalMode, setModalMode] = useState("create");
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -262,9 +279,9 @@ const UserManagement = () => {
       setUsers(data);
       setError(null);
     } catch (err) {
-      setError('Erro ao carregar usuários');
+      setError("Erro ao carregar usuários");
       HandleApiError(err);
-      console.error('Error fetching users:', err);
+      console.error("Error fetching users:", err);
     } finally {
       setLoading(false);
     }
@@ -276,20 +293,22 @@ const UserManagement = () => {
 
   const handleEdit = (user) => {
     setCurrentUser(user);
-    setModalMode('edit');
+    setModalMode("edit");
     setShowModal(true);
   };
 
   const handleDelete = async (userId) => {
-    const result = await NotificationService.confirm('Tem certeza que deseja excluir este usuário?');
-    
+    const result = await NotificationService.confirm(
+      "Tem certeza que deseja excluir este usuário?"
+    );
+
     if (result.isConfirmed) {
       try {
         await UserService.deleteUser(userId);
         await fetchUsers();
-        NotificationService.success('Usuário excluído com sucesso!');
+        NotificationService.success("Usuário excluído com sucesso!");
       } catch (error) {
-        console.error('Error deleting user:', error);
+        console.error("Error deleting user:", error);
         HandleApiError(error);
       }
     }
@@ -297,27 +316,28 @@ const UserManagement = () => {
 
   const handleSubmit = async (userData) => {
     try {
-      if (modalMode === 'create') {
+      if (modalMode === "create") {
         await UserService.createUser(userData);
-        NotificationService.success('Usuário criado com sucesso!');
+        NotificationService.success("Usuário criado com sucesso!");
       } else {
         await UserService.updateUser(currentUser.id, userData);
-        NotificationService.success('Usuário atualizado com sucesso!');
+        NotificationService.success("Usuário atualizado com sucesso!");
       }
       await fetchUsers();
       setShowModal(false);
     } catch (error) {
-      console.error('Error saving user:', error);
+      console.error("Error saving user:", error);
       HandleApiError(error);
     }
-  }
+  };
 
   if (loading) return <LoadingState />;
   if (error) return <ErrorState error={error} />;
 
-  const filteredUsers = users.filter(user => 
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -326,22 +346,22 @@ const UserManagement = () => {
 
       <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
-          <SearchBar text={"Buscar usuários..."} value={searchTerm} onChange={setSearchTerm} />
-          
-          <button
-            onClick={() => {
+          <SearchBar
+            text={"Buscar usuários..."}
+            value={searchTerm}
+            onChange={setSearchTerm}
+          />
+          <ButtonAdd
+            text={"Novo Usuário"}
+            onFunction={() => {
               setCurrentUser(null);
-              setModalMode('create');
+              setModalMode("create");
               setShowModal(true);
             }}
-            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors w-full sm:w-auto justify-center"
-          >
-            <Plus className="h-5 w-5 mr-2" />
-            Novo Usuário
-          </button>
+          />
         </div>
 
-        <UserTable 
+        <UserTable
           users={filteredUsers}
           onEdit={handleEdit}
           onDelete={handleDelete}
