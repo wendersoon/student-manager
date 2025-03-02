@@ -11,10 +11,12 @@ from drf_spectacular.views import (
 
 from users.views import UserViewSet, CustomTokenObtainPairView
 from classes.views import ClassViewSet
+from students.views import StudentViewSet
 
 router = DefaultRouter()
 router.register(r'api/users', UserViewSet, basename='users')
 router.register(r'api/classes', ClassViewSet, basename='classes')
+router.register(r'api/students', StudentViewSet, basename='students')
 
 urlpatterns = [
 

@@ -28,20 +28,33 @@ class Student(models.Model):
         ('E', 'Embaixador'),
         ('P', 'Professor'),
         ('V', 'Prospeccao'),
+        ('T', 'Atendimento'),
         ('X', 'Outro'),
     )
     DESIRED_COURSE = (
-        ('C', 'Ciência da Computação'),
-        ('P', 'CFO - Curso de Formação de Oficiais'),
-        ('D', 'Direito'),
-        ('F', 'Enfermagem'),
-        ('E', 'Engenharia Civil'),
         ('M', 'Medicina'),
-        ('V', 'Medicina Veterinária'),
+        ('F', 'Farmácia'),
         ('O', 'Odontologia'),
+        ('G', 'Gestão da Tecnologia da Informação'),
+        ('C', 'Ciência da Computação'),
+        ('V', 'Medicina Veterinária'),
+        ('D', 'Design'),
+        ('R', 'Relações Públicas'),
+        ('A', 'Arquitetura e Urbanismo'),
+        ('P', 'Publicidade e Propaganda'),
+        ('L', 'Letras'),
+        ('T', 'Fisioterapia'),
+        ('S', 'Sistemas de Informação'),
+        ('N', 'Contabilidade'),
+        ('E', 'Economia'),
+        ('I', 'Engenharia Civil'),
+        ('Y', 'Psicologia'),
+        ('Q', 'Gestão da Qualidade'),
+        ('H', 'Redes de Computadores'),
+        ('Z', 'Agronomia'),
         ('X', 'Outro')
     )
-    
+
     # Lista completa de estados brasileiros
     ESTADOS_CHOICES = (
         ('AC', 'Acre'),
@@ -78,6 +91,16 @@ class Student(models.Model):
     birth_date = models.DateField(validators=[validate_birth_date])
     sexo = models.CharField(max_length=1, choices=GENDER_CHOICES)
     phone = models.CharField(
+        max_length=20,
+        validators=[
+            RegexValidator(
+                regex=r'^\+?1?\d{9,15}$',
+                message=_('O número de telefone deve estar no formato: "+999999999". Até 15 dígitos são permitidos.')
+            )
+        ]
+    )
+    responsible_name = models.CharField(max_length=60)
+    responsible_phone = models.CharField(
         max_length=20,
         validators=[
             RegexValidator(
@@ -125,6 +148,13 @@ class Student(models.Model):
         null=True,
         blank=True, 
         related_name='student_created'
+    )
+    sold_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True, 
+        related_name='student_sold' 
     )
 
     class Meta:
