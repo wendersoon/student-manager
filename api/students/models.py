@@ -24,10 +24,10 @@ class Student(models.Model):
         ('F', 'Indicação'),
         ('Y', 'Youtube'),
         ('S', 'Site'),
-        ('A', 'Anuncio'),
+        ('A', 'Anúncio'),
         ('E', 'Embaixador'),
         ('P', 'Professor'),
-        ('V', 'Prospeccao'),
+        ('V', 'Prospecção'),
         ('T', 'Atendimento'),
         ('X', 'Outro'),
     )
